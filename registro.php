@@ -12,50 +12,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $contrasenia = $_POST["contrasenia"];
 
     // Evitar inyección de SQL utilizando consultas preparadas
-    $sentencia = $conexion->prepare("INSERT INTO `usuarios` (email, password, tipo) VALUES (:email, :contrasenia, 'candidato')");
-
-    // Enlazar parámetros
-    $sentencia->bindParam(":nombre", $nombre);
-    $sentencia->bindParam(":apellidos", $apellidos);
-    $sentencia->bindParam(":email", $email);
-    $sentencia->bindParam(":contrasenia", $contrasenia);
+    $sentenciaCandidato = $conexion->prepare("INSERT INTO `candidato` (nombre, apellido, email, password) VALUES (:nombre, :apellidos, :email, :contrasenia)");
+    $sentenciaCandidato->bindParam(":nombre", $nombre);
+    $sentenciaCandidato->bindParam(":apellidos", $apellidos);
+    $sentenciaCandidato->bindParam(":email", $email);
+    $sentenciaCandidato->bindParam(":contrasenia", $contrasenia);
 
     // Ejecutar la consulta
-    $resultado = $sentencia->execute();
+    $resultadoCandidato = $sentenciaCandidato->execute();
 
     // Verificar el resultado
-    if ($resultado) {
-        // Obtener el ID del usuario recién insertado
-        $idUsuario = $conexion->lastInsertId();
+    if ($resultadoCandidato) {
+        // Obtener el ID del candidato recién insertado
+        $idCandidato = $conexion->lastInsertId();
 
-        // Guardar el CV si se proporcionó
-        if ($_FILES['cv']['size'] > 0) {
-            $nombreCV = $_FILES['cv']['name'];
-            $rutaCV = 'uploads/cvs/' . $nombreCV;
-
-            // Mover el archivo a la carpeta de uploads
-            move_uploaded_file($_FILES['cv']['tmp_name'], $rutaCV);
-
-            // Actualizar la tabla Candidato con el ID de usuario y la ruta del CV
-            $updateCandidato = $conexion->prepare("INSERT INTO `candidato` (idUsuario, nombre, apellidos, email, cv) VALUES (:idUsuario, :nombre, :apellidos, :email, :cv)");
-            $updateCandidato->bindParam(":idUsuario", $idUsuario);
-            $updateCandidato->bindParam(":nombre", $nombre);
-            $updateCandidato->bindParam(":apellidos", $apellidos);
-            $updateCandidato->bindParam(":email", $email);
-            $updateCandidato->bindParam(":cv", $rutaCV);
-            $updateCandidato->execute();
-        }
+        // Resto de tu código para guardar otros datos relacionados con el candidato
+        // ...
 
         $_SESSION['registro_exitoso'] = true;
         header("Location: login.php");
         exit();
     } else {
-        $mensaje = "Error: No se pudo registrar el usuario.";
+        $mensaje = "Error: No se pudo registrar el candidato.";
     }
 }
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -86,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         <?php } ?>
 
-                        <form action="" method="post" class="needs-validation" enctype="multipart/form-data" novalidate>
+                        <form action="" method="post" class="needs-validation" novalidate>
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre:</label>
                                 <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre" required>
@@ -108,8 +91,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="invalid-feedback">Por favor, ingrese una contraseña.</div>
                             </div>
                             <div class="mb-3">
-                             <label for="cv" class="form-label">CV (formato PDF):</label>
-                            <input type="file" class="form-control" name="cv" id="cv" accept=".pdf">
+                                <label for="cv" class="form-label">CV (formato PDF):</label>
+                                <input type="file" class="form-control" name="cv" id="cv" accept=".pdf">
                             </div>
                             <button type="submit" class="btn btn-primary btn-center">Registrarse</button>
                         </form>
@@ -126,7 +109,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
         integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
-        crossorigin="anonymous"></script>
-</body>
-
-</html>
+        crossorigin="anonymous"></script

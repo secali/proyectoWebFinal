@@ -5,7 +5,7 @@ session_start();
 $url_base = "http://localhost:3000/";
 
 // Verificar si hay una sesión abierta
-if (!isset($_SESSION['usuario'])) {
+if (!isset($_SESSION['email'])) {
     $enlaceCerrarSesion = "<a class='nav-link' href='{$url_base}login.php'>Login</a>";
     $perfilUsuario = ''; // Si no hay sesión, el perfil está vacío
 } else {

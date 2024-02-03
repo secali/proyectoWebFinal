@@ -1,5 +1,4 @@
 <?php
-session_start();
 include("./plantillas/header.php");
 include("./db.php");
 

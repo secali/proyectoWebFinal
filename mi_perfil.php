@@ -13,13 +13,9 @@ if (!isset($_SESSION['usuario'])) {
 $usuario = $_SESSION['usuario'];
 
 // Consultar información del usuario y candidato
-$consultaUsuario = $conexion->prepare("SELECT * FROM usuarios WHERE username = ?");
+$consultaUsuario = $conexion->prepare("SELECT * FROM usuarios inner join candidato on usuarios.idRelacionado = candidato.idCandidato WHERE username = ?");
 $consultaUsuario->execute([$usuario]);
 $usuario = $consultaUsuario->fetch(PDO::FETCH_ASSOC);
-
-$consultaCandidato = $conexion->prepare("SELECT * FROM candidatos WHERE username = ?");
-$consultaCandidato->execute([$usuario]);
-$candidato = $consultaCandidato->fetch(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -37,14 +33,14 @@ $candidato = $consultaCandidato->fetch(PDO::FETCH_ASSOC);
 
         <!-- Mostrar información del usuario -->
         <h2>Datos del Usuario</h2>
-        <p><strong>Nombre de Usuario:</strong> <?php echo $usuario['nombre_usuario']; ?></p>
+        <p><strong>Nombre de Usuario:</strong> <?php echo $usuario['username']; ?></p>
         <p><strong>Email:</strong> <?php echo $usuario['email']; ?></p>
-
-        <!-- Mostrar información del candidato si existe -->
+        <!--
+ Mostrar información del candidato si existe 
         <?php if ($candidato) : ?>
             <h2>Datos del Candidato</h2>
             <p><strong>Nombre:</strong> <?php echo $candidato['nombre']; ?></p>
-            <p><strong>Apellido:</strong> <?php echo $candidato['apellido']; ?></p>
+            <p><strong>Apellido:</strong> <?php echo $candidato['apellido']; ?></p>  -->
             <!-- Agrega más campos según sea necesario -->
         <?php else : ?>
             <p>No se encontraron datos del candidato.</p>

@@ -1,41 +1,42 @@
 <?php
 session_start();
+include("./db.php");
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Incluir el archivo de conexión a la base de datos
-    include("./db.php");
+// Verificar si se ha enviado el formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Obtener los datos del formulario
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-    // Evitar inyección de SQL utilizando consultas preparadas
-    $sentencia = $conexion->prepare("SELECT * FROM `usuarios` WHERE username = :username AND password = :password");
+    // Consultar la base de datos para verificar la autenticación
+    $sql = "SELECT * FROM Candidato WHERE email = :email";
+    $stmt = $conexion->prepare($sql);
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Obtener datos del formulario
-    $username = $_POST["usuario"];
-    $contrasenia = $_POST["contrasenia"];
+    if ($usuario) {
+        // Verificar la contraseña (puedes utilizar password_verify si las contraseñas están hasheadas)
+        if ($password == $usuario['password']) {
+            // Autenticación exitosa
+            // Almacenar información del usuario en sesiones
+            $_SESSION['idCandidato'] = $usuario['idCandidato'];
+            $_SESSION['email'] = $usuario['email'];
 
-    // Enlazar parámetros
-    $sentencia->bindParam(":username", $username);
-    $sentencia->bindParam(":password", $contrasenia);
-
-    // Ejecutar la consulta
-    $sentencia->execute();
-
-    // Obtener el resultado como un array asociativo
-    $registro = $sentencia->fetch(PDO::FETCH_ASSOC);
-
-    // Verificar si se encontró algún usuario
-    if ($registro) {
-        $_SESSION['usuario'] = $registro["username"];
-        $_SESSION['logueado'] = true;
-        header("Location: index.php");
-        exit(); // Terminar el script después de redirigir
+            // Redirigir al usuario a buscar_oferta.php
+            header("Location: index.php");
+            exit();
+        } else {
+            $mensaje = "Contraseña incorrecta";
+        }
     } else {
-        $mensaje = "Error: El usuario o la contraseña son incorrectos";
+        $mensaje = "Usuario no encontrado";
     }
 }
 ?>
 
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es">
 
 <head>
     <title>Login</title>
@@ -65,17 +66,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         <?php } ?>
 
-                        <form action="" method="post">
+                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                             <div class="mb-3">
-                                <label for="usuario" class="form-label">Usuario:</label>
-                                <input type="text" class="form-control" name="usuario" id="usuario" placeholder="Usuario">
+                                <label for="email" class="form-label">Usuario:</label>
+                                <input type="text" class="form-control" name="email" id="email" placeholder="Email">
                             </div>
                             <div class="mb-3">
-                                <label for="contrasenia" class="form-label">Contraseña:</label>
-                                <input type="password" class="form-control" name="contrasenia" id="contrasenia" placeholder="Contraseña">
+                                <label for="password" class="form-label">Contraseña:</label>
+                                <input type="password" class="form-control" name="password" id="password" placeholder="Contraseña">
                             </div>
                             <div class="card-footer text-muted">
-                            ¿No tienes una cuenta? <a id="register" href="registro.php" class="btn btn-link">Regístrate aquí</a>.
+                                ¿No tienes una cuenta? <a id="register" href="registro.php" class="btn btn-link">Regístrate aquí</a>.
                             </div>
                             <button type="submit" class="btn btn-primary">Entrar</button>
                         </form>
