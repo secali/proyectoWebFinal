@@ -74,7 +74,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <label for="contrasenia" class="form-label">Contraseña:</label>
                                 <input type="password" class="form-control" name="contrasenia" id="contrasenia" placeholder="Contraseña">
                             </div>
-                            <button type="submit" class="btn btn-primary">Entrar al administrador</button>
+                            <div class="card-footer text-muted">
+                            ¿No tienes una cuenta? <a id="register" href="registro.php" class="btn btn-link">Regístrate aquí</a>.
+                            </div>
+                            <button type="submit" class="btn btn-primary">Entrar</button>
                         </form>
                     </div>
                 </div>
