@@ -2,6 +2,14 @@
 include("./plantillas/header.php");
 include("./db.php");
 
+// Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION['idCandidato'])) {
+    echo "<script>alert('Inicia sesión para poder inscribirte');</script>";
+    // Si no ha iniciado sesión, redirigir a la página de inicio de sesión
+    echo '<script>window.location.href = "login.php";</script>';
+    exit();
+}
+
 // Verificar si se ha enviado el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obtener el idOferta y idCandidato desde el formulario
@@ -25,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Redirige a index.php después de procesar la inscripción
-    // header("Location: index.php");
+    echo '<script>window.location.href = "index.php";</script>';
     exit();
 } else {
     // Si no se ha enviado el formulario, redirige a index.php
