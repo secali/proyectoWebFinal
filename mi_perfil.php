@@ -3,17 +3,17 @@ include("./plantillas/header.php");
 include("./db.php");
 
 // Verificar si hay una sesión abierta
-if (!isset($_SESSION['usuario'])) {
+if (!isset($_SESSION['email'])) {
     // Redireccionar si no hay sesión
     header("Location: {$url_base}login.php");
     exit();
 }
 
 // Obtener el ID del usuario desde la sesión
-$usuario = $_SESSION['usuario'];
+$usuario = $_SESSION['email'];
 
 // Consultar información del usuario y candidato
-$consultaUsuario = $conexion->prepare("SELECT * FROM usuarios inner join candidato on usuarios.idRelacionado = candidato.idCandidato WHERE username = ?");
+$consultaUsuario = $conexion->prepare("SELECT * FROM Candidato where email = ?");
 $consultaUsuario->execute([$usuario]);
 $usuario = $consultaUsuario->fetch(PDO::FETCH_ASSOC);
 ?>
@@ -33,8 +33,11 @@ $usuario = $consultaUsuario->fetch(PDO::FETCH_ASSOC);
 
         <!-- Mostrar información del usuario -->
         <h2>Datos del Usuario</h2>
-        <p><strong>Nombre de Usuario:</strong> <?php echo $usuario['username']; ?></p>
+        <p><strong>Nombre:</strong> <?php echo $usuario['nombre']; ?></p>
+        <p><strong>Apellidos:</strong> <?php echo $usuario['nombre']; ?></p>
         <p><strong>Email:</strong> <?php echo $usuario['email']; ?></p>
+        <p><strong>Fecha de registro:</strong> <?php echo $usuario['fechaRegistro']; ?></p>
+        <p><strong>Curriculum Vitae:</strong> <?php echo $usuario['cv']; ?></p>
         <!--
  Mostrar información del candidato si existe 
         <?php if ($candidato) : ?>

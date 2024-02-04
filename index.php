@@ -65,6 +65,14 @@ $empleos = $consultaEmpleos->fetchAll(PDO::FETCH_ASSOC);
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $empleo['titulo']; ?></h5>
                                 <p class="card-text"><?php echo $empleo['descripcion']; ?></p>
+
+                                <!-- Formulario de inscripción -->
+                                <form action="procesar_inscripcion.php" method="post">
+                                    <!-- Campo oculto para el idOferta -->
+                                    <input type="hidden" name="idOferta" value="<?php echo $empleo['idOferta']; ?>">
+
+                                    <button type="submit" class="btn btn-primary">Inscribirse</button>
+                                </form>
                             </div>
                         </div>
                     </div>

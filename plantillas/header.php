@@ -37,14 +37,10 @@ if (!isset($_SESSION['email'])) {
     <nav class="navbar navbar-expand navbar-light bg-light">
         <ul class="nav navbar-nav">
             <li class="nav-item">
-                <a class="nav-link active" href="<?php echo $url_base; ?>index.php">Inicio<span
-                        class="visually-hidden">(current)</span></a>
+                <a class="nav-link" href="<?php echo $url_base; ?>inscripciones.php">Inscripciones</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo $url_base; ?>modulos/empleados/index.php">Empleados</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo $url_base; ?>modulos/puestos/index.php">Puestos</a>
+                <a class="nav-link" href="<?php echo $url_base; ?>index.php">Ofertas de trabajo</a>
             </li>
             <?php echo $perfilUsuario; ?>
             <?php echo $enlaceCerrarSesion; ?>
