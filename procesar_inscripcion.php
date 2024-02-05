@@ -4,7 +4,7 @@ include("./db.php");
 
 // Verificar si el usuario ha iniciado sesión
 if (!isset($_SESSION['idCandidato'])) {
-    echo "<script>alert('Inicia sesión para poder inscribirte');</script>";
+    echo "<script>alert('Inicia sesión');</script>";
     // Si no ha iniciado sesión, redirigir a la página de inicio de sesión
     echo '<script>window.location.href = "login.php";</script>';
     exit();

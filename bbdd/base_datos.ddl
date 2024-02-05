@@ -22,7 +22,7 @@ CREATE TABLE Ofertante (
 -- Creación de la tabla Oferta
 CREATE TABLE Empleos (
     idOferta INT AUTO_INCREMENT PRIMARY KEY,
-    idOfertante INT,
+    idOfertante INT NOT NULL,
     titulo VARCHAR(100) NOT NULL,
     descripcion TEXT,
     categoria VARCHAR(255),
@@ -34,8 +34,8 @@ CREATE TABLE Empleos (
 
 CREATE TABLE Candidaturas (
     idAplicacion INT AUTO_INCREMENT PRIMARY KEY,
-    idCandidato INT,
-    idOferta INT,
+    idCandidato INT NOT NULL,
+    idOferta INT NOT NULL,
     fechaAplicacion DATETIME DEFAULT CURRENT_TIMESTAMP,
     estado ENUM('pendiente', 'aceptada', 'rechazada') DEFAULT 'pendiente',
     FOREIGN KEY (idCandidato) REFERENCES Candidato(idCandidato),
