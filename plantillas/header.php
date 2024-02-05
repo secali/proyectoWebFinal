@@ -2,7 +2,7 @@
 
 <?php
 session_start();
-$url_base = "http://localhost:3000/";
+$url_base = "http://localhost:3000/candidatos/";
 
 // Verificar si hay una sesión abierta
 if (!isset($_SESSION['email'])) {
