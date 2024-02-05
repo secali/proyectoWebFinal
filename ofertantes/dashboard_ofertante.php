@@ -1,5 +1,5 @@
 <?php
-include("./db.php");
+include("./../db.php");
 
 // Verificar si el ofertante ha iniciado sesión
 session_start();

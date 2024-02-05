@@ -1,5 +1,5 @@
 <?php
-include("./db.php");
+include("./../db.php");
 session_start();
 // Verificar si se ha enviado el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

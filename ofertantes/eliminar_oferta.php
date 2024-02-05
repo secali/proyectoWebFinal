@@ -1,6 +1,6 @@
 <?php
 // Incluir el archivo de conexión a la base de datos
-include("./db.php");
+include("./../db.php");
 
 // Verificar si el ofertante ha iniciado sesión
 session_start();

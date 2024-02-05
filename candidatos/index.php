@@ -1,6 +1,6 @@
 <?php
-include("./plantillas/header.php");
-include("./db.php");
+include("./../plantillas/header.php");
+include("./../db.php");
 
 // Obtener categorías únicas desde la base de datos
 $consultaCategorias = $conexion->query("SELECT DISTINCT categoria FROM empleos");
@@ -98,4 +98,4 @@ $empleos = $consultaEmpleos->fetchAll(PDO::FETCH_ASSOC);
 
 </html>
 
-<?php include("./plantillas/footer.php"); ?>
+<?php include("./../plantillas/footer.php"); ?>
