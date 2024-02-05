@@ -1,6 +1,6 @@
 <?php
-include("./plantillas/header.php");
-include("./db.php");
+include("./../plantillas/header.php");
+include("./../db.php");
 
 // Verificar si el usuario ha iniciado sesión
 if (!isset($_SESSION['idCandidato'])) {

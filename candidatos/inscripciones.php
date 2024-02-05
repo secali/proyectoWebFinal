@@ -1,8 +1,7 @@
 <?php
-include("./db.php");
+include("./../db.php");
 
-include("./plantillas/header.php");
-
+include("./../plantillas/header.php");
 // Verificar si el usuario ha iniciado sesión
 if (!isset($_SESSION['idCandidato'])) {
     // Si no ha iniciado sesión, redirigir a la página de inicio de sesión

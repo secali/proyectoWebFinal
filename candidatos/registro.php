@@ -3,7 +3,7 @@ session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Incluir el archivo de conexión a la base de datos
-    include("./db.php");
+    include("./../db.php");
 
     // Obtener datos del formulario
     $nombre = $_POST["nombre"];

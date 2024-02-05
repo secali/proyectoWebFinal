@@ -1,6 +1,6 @@
 <?php
-include("./plantillas/header.php");
-include("./db.php");
+include("./../plantillas/header.php");
+include("./../db.php");
 
 // Verificar si hay una sesión abierta
 if (!isset($_SESSION['email'])) {
