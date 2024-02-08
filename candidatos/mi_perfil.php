@@ -44,7 +44,6 @@ $usuario = $consultaUsuario->fetch(PDO::FETCH_ASSOC);
             <h2>Datos del Candidato</h2>
             <p><strong>Nombre:</strong> <?php echo $candidato['nombre']; ?></p>
             <p><strong>Apellido:</strong> <?php echo $candidato['apellido']; ?></p>  -->
-            <!-- Agrega más campos según sea necesario -->
         <?php else : ?>
             <p>No se encontraron datos del candidato.</p>
         <?php endif; ?>

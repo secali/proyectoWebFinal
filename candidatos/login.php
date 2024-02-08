@@ -1,5 +1,5 @@
 <?php
-session_start();
+include("./../plantillas/header.php");
 include("./../db.php");
 
 // Verificar si se ha enviado el formulario

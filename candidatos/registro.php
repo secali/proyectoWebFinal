@@ -1,5 +1,5 @@
 <?php
-session_start();
+include("./../plantillas/header.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Incluir el archivo de conexión a la base de datos
@@ -25,9 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($resultadoCandidato) {
         // Obtener el ID del candidato recién insertado
         $idCandidato = $conexion->lastInsertId();
-
-        // Resto de tu código para guardar otros datos relacionados con el candidato
-        // ...
 
         $_SESSION['registro_exitoso'] = true;
         header("Location: login.php");
