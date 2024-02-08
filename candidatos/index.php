@@ -12,10 +12,7 @@ $filtroCategoriaSQL = $filtroCategoria ? " WHERE categoria = '$filtroCategoria'"
 
 // Buscar por título si se ha enviado un término de búsqueda
 $busquedaTitulo = isset($_GET['titulo']) ? $_GET['titulo'] : '';
-$filtroTituloSQL = '';
-if ($busquedaTitulo !== '') {
-    $filtroTituloSQL = ($filtroCategoriaSQL !== '') ? " AND titulo LIKE '%$busquedaTitulo%'" : " WHERE titulo LIKE '%$busquedaTitulo%'";
-}
+$filtroTituloSQL = $busquedaTitulo ? " AND titulo LIKE '%$busquedaTitulo%'" : '';
 
 // Consultar empleos según los filtros
 $consultaEmpleos = $conexion->query("SELECT * FROM empleos $filtroCategoriaSQL $filtroTituloSQL");
@@ -37,8 +34,7 @@ $empleos = $consultaEmpleos->fetchAll(PDO::FETCH_ASSOC);
     </header>
 
     <main class="container">
-
-        <h1>Lista de Empleos Disponibles</h1>
+        <h1 class="mt-5">Lista de Empleos Disponibles</h1>
 
         <!-- Formulario de búsqueda y filtrado -->
         <form method="get">
@@ -72,6 +68,8 @@ $empleos = $consultaEmpleos->fetchAll(PDO::FETCH_ASSOC);
 
                                 <!-- Formulario de inscripción -->
                                 <form action="procesar_inscripcion.php" method="post">
+                                    <!-- Campo oculto para el idOferta -->
+                                    <input type="hidden" name="idOferta" value="<?php echo $empleo['idOferta']; ?>">
 
                                     <button type="submit" class="btn btn-primary">Inscribirse</button>
                                 </form>
